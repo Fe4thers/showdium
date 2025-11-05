@@ -1,4 +1,12 @@
-<p align="center"> <strong>An extension for Noxesium, unlocking powerful new server-side controls for an enhanced multiplayer experience.</strong> </p><p align="center"> <!-- BADGES - Replace placeholders with your actual links/data --> <a href="https://modrinth.com/mod/your-mod-id"><img src="https://img.shields.io/modrinth/v/showdium?color=00AF5C&label=Modrinth&style=for-the-badge" alt="Modrinth"></a><a href="https://github.com/your-username/showdium/actions"><img src="https://img.shields.io/github/actions/workflow/status/your-username/showdium/build.yml?branch=main&style=for-the-badge" alt="Build Status"></a> <a href="https://github.com/your-username/showdium/blob/main/LICENSE"><img src="https://img.shields.io/github/license/your-username/showdium?style=for-the-badge&color=blue" alt="License"></a> </p>
+<p align="center">
+  <strong>An extension for Noxesium, unlocking powerful new server-side controls for an enhanced multiplayer experience.</strong>
+</p>
+
+<p align="center">
+  <a href="https://modrinth.com/mod/showdium"><img src="https://img.shields.io/modrinth/v/showdium?color=00AF5C&label=Modrinth&style=for-the-badge" alt="Modrinth"></a>
+  <a href="https://github.com/Fe4thers/showdium/actions"><img src="https://img.shields.io/github/actions/workflow/status/Fe4thers/showdium/build.yml?branch=main&style=for-the-badge" alt="Build Status"></a>
+  <a href="https://github.com/Fe4thers/showdium/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Fe4thers/showdium?style=for-the-badge&color=blue" alt="License"></a>
+</p>
 About Showdium
 
 Showdium is a Fabric mod designed as a powerful add-on for the Noxesium framework. While Noxesium provides a fantastic foundation for improving the multiplayer experience, Showdium builds upon it by providing server developers with an expanded toolkit to create more controlled, immersive, and unique gameplay mechanics.
