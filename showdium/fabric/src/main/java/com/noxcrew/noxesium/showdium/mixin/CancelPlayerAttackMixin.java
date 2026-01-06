@@ -1,6 +1,6 @@
 package com.noxcrew.noxesium.showdium.mixin;
 
-import com.noxcrew.noxesium.api.registry.GameComponents;
+import com.noxcrew.noxesium.api.component.GameComponents;
 import com.noxcrew.noxesium.showdium.registry.ShowdiumGameComponent;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.world.entity.Entity;

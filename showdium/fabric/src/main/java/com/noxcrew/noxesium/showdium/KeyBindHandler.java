@@ -2,8 +2,8 @@ package com.noxcrew.noxesium.showdium;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.noxcrew.noxesium.api.feature.NoxesiumFeature;
+import com.noxcrew.noxesium.api.feature.qib.QibDefinition;
 import com.noxcrew.noxesium.api.network.NoxesiumServerboundNetworking;
-import com.noxcrew.noxesium.api.qib.QibDefinition;
 import com.noxcrew.noxesium.api.registry.NoxesiumRegistries;
 import com.noxcrew.noxesium.showdium.network.serverbound.ServerboundKeybindTriggeredPacket;
 import java.util.*;
@@ -245,7 +245,7 @@ public final class KeyBindHandler extends NoxesiumFeature {
      *
      * @return The translation key for the category.
      */
-    public String getKeybindCategory() {
-        return "category.noxesium";
+    public KeyMapping.Category getKeybindCategory() {
+        return ShowdiumEntrypoint.Keybindcategory;
     }
 }

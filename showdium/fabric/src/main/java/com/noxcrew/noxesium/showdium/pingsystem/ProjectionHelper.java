@@ -25,7 +25,7 @@ public final class ProjectionHelper {
         var camera = ShowdiumEntrypoint.GAME.gameRenderer.getMainCamera();
 
         // Transform world position relative to camera
-        Vec3 cameraPos = camera.getPosition();
+        Vec3 cameraPos = camera.position();
         Vec3 relativePos = worldPosition.subtract(cameraPos.x, cameraPos.y, cameraPos.z);
 
         Vector4f clipSpacePos = new Vector4f((float) relativePos.x, (float) relativePos.y, (float) relativePos.z, 1.0f);

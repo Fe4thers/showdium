@@ -2,11 +2,12 @@ package com.noxcrew.noxesium.showdium.pingsystem;
 
 import com.mojang.blaze3d.opengl.GlStateManager;
 import com.noxcrew.noxesium.showdium.ShowdiumEntrypoint;
+import com.noxcrew.noxesium.showdium.config.PingSystemConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import org.joml.Matrix3x2fStack;
 
@@ -17,6 +18,7 @@ public class PingRenderHelper {
 
     private static final int LABEL_BACKGROUND_COLOR = ARGB.color(64, 0, 0, 0);
     private static final int ARROW_ICON_SIZE = 75;
+    private static final int PING_ICON_SIZE = 16;
     private static final float PING_ICON_SCALE = 3.5f;
     private static final float HEAD_ICON_SCALE = 2.0f;
 
@@ -64,7 +66,7 @@ public class PingRenderHelper {
             return;
         }
 
-        ResourceLocation skinTexture = player.getSkin().texture();
+        Identifier skinTexture = player.getSkin().body().texturePath();
 
         GlStateManager._enableBlend();
 
@@ -80,7 +82,7 @@ public class PingRenderHelper {
     /**
      * Renders a texture at the current position.
      */
-    public void renderTexture(ResourceLocation texture, int size, int color) {
+    public void renderTexture(Identifier texture, int size, int color) {
         int offset = -size / 2;
 
         GlStateManager._enableBlend();
@@ -89,13 +91,18 @@ public class PingRenderHelper {
     }
 
     /**
-     * Renders the directional arrow icon.
+     * Renders the directional arrow icon with config scale applied.
      */
     public void renderDirectionalArrow(int color) {
+        float configScale = PingSystemConfig.getPingScale();
+        matrixStack.pushMatrix();
+        matrixStack.scale(configScale, configScale);
         renderTexture(PingResources.ARROW_ICON_TEXTURE, ARROW_ICON_SIZE, color);
+        matrixStack.popMatrix();
     }
 
     /**
+     *
      * Renders the default ping icon (simple square).
      */
     public void renderPingIcon(int color) {
@@ -107,18 +114,23 @@ public class PingRenderHelper {
 
     /**
      * Renders a complete ping marker with player head.
+     * Applies the config scale setting.
      */
     public void renderFullPingMarker(int pingColor, PlayerInfo creator) {
+        float configScale = PingSystemConfig.getPingScale();
+
         // Main ping icon
         matrixStack.pushMatrix();
-        matrixStack.scale(PING_ICON_SCALE, PING_ICON_SCALE);
+        float totalPingScale = PING_ICON_SCALE * configScale;
+        matrixStack.scale(totalPingScale, totalPingScale);
         renderPingIcon(pingColor);
         matrixStack.popMatrix();
 
         // Player head overlay
         if (creator != null) {
             matrixStack.pushMatrix();
-            matrixStack.scale(HEAD_ICON_SCALE, HEAD_ICON_SCALE);
+            float totalHeadScale = HEAD_ICON_SCALE * configScale;
+            matrixStack.scale(totalHeadScale, totalHeadScale);
             renderPlayerHead(creator);
             matrixStack.popMatrix();
         }

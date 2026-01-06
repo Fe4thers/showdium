@@ -8,6 +8,7 @@ import com.noxcrew.noxesium.showdium.network.serverbound.ServerboundPingAddPacke
 import com.noxcrew.noxesium.showdium.network.serverbound.ServerboundPingRemovePacket;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import org.joml.Vector3f;
 
 /**
  * Defines all common Showdium serializers.
@@ -55,7 +56,10 @@ public class ShowdiumPacketSerializers {
                         ClientboundPingAddPacket::color,
                         ByteBufCodecs.STRING_UTF8,
                         ClientboundPingAddPacket::uuid,
-                        ByteBufCodecs.VECTOR3F,
+                        ByteBufCodecs.VECTOR3F.map(
+                                vector3fc -> new Vector3f(vector3fc.x(), vector3fc.y(), vector3fc.z()),
+                                vector3f -> vector3f
+                        ),
                         ClientboundPingAddPacket::location,
                         ClientboundPingAddPacket::new));
 
@@ -73,7 +77,10 @@ public class ShowdiumPacketSerializers {
                         ServerboundPingAddPacket::color,
                         ByteBufCodecs.STRING_UTF8,
                         ServerboundPingAddPacket::uuid,
-                        ByteBufCodecs.VECTOR3F,
+                        ByteBufCodecs.VECTOR3F.map(
+                                vector3fc -> new Vector3f(vector3fc.x(), vector3fc.y(), vector3fc.z()),
+                                vector3f -> vector3f
+                        ),
                         ServerboundPingAddPacket::location,
                         ServerboundPingAddPacket::new));
 

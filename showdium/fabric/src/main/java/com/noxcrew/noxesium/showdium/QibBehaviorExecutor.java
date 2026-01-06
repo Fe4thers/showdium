@@ -1,16 +1,16 @@
 package com.noxcrew.noxesium.showdium;
 
-import static com.noxcrew.noxesium.api.qib.QibCondition.IS_ON_GROUND;
+import static com.noxcrew.noxesium.api.feature.qib.QibCondition.IS_ON_GROUND;
 
 import com.noxcrew.noxesium.api.feature.NoxesiumFeature;
-import com.noxcrew.noxesium.api.qib.QibEffect;
+import com.noxcrew.noxesium.api.feature.qib.QibEffect;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -82,6 +82,7 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
                             case IS_ON_GROUND -> player.onGround();
                             case IS_IN_WATER -> player.isInWater();
                             case IS_IN_WATER_OR_RAIN -> player.isInWaterOrRain();
+                            case IS_IN_VEHICLE -> player.isPassenger();
                         };
                 if (conditional.condition() == IS_ON_GROUND && !conditional.value()) {
                     // logic to skip the jump of the ground
@@ -138,14 +139,14 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
                         .playLocalSound(
                                 player,
                                 SoundEvent.createVariableRangeEvent(
-                                        ResourceLocation.fromNamespaceAndPath(playSound.namespace(), playSound.path())),
+                                        Identifier.fromNamespaceAndPath(playSound.namespace(), playSound.path())),
                                 SoundSource.PLAYERS,
                                 playSound.volume(),
                                 playSound.pitch());
             }
             case QibEffect.GivePotionEffect giveEffect -> {
                 var type = BuiltInRegistries.MOB_EFFECT
-                        .get(ResourceLocation.fromNamespaceAndPath(giveEffect.namespace(), giveEffect.path()))
+                        .get(Identifier.fromNamespaceAndPath(giveEffect.namespace(), giveEffect.path()))
                         .orElse(null);
                 player.noxesium$addClientsidePotionEffect(new MobEffectInstance(
                         type,
@@ -157,7 +158,7 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
             }
             case QibEffect.RemovePotionEffect removeEffect -> {
                 player.noxesium$removeClientsidePotionEffect(BuiltInRegistries.MOB_EFFECT
-                        .get(ResourceLocation.fromNamespaceAndPath(removeEffect.namespace(), removeEffect.path()))
+                        .get(Identifier.fromNamespaceAndPath(removeEffect.namespace(), removeEffect.path()))
                         .orElse(null));
             }
             case QibEffect.RemoveAllPotionEffects ignored -> {

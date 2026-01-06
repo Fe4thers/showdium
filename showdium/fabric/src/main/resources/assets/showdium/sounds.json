@@ -1,8 +1,8 @@
 {
 	"ping": {
-		"subtitle": "subtitles.pingwheel.ping",
+		"subtitle": "subtitles.showdium.ping",
 		"sounds": [
-			"pingwheel:ping"
+			"showdium:ping"
 		]
 	}
 }

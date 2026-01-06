@@ -30,18 +30,19 @@ public abstract class LevelRendererMixin {
                             ordinal = 7,
                             shift = At.Shift.AFTER))
     private void captureRenderContext(
-            GraphicsResourceAllocator allocator,
+            GraphicsResourceAllocator graphicsResourceAllocator,
             DeltaTracker deltaTracker,
-            boolean renderBlockOutline,
+            boolean bl,
             Camera camera,
-            Matrix4f modelViewMatrix,
-            Matrix4f projectionMatrix,
-            GpuBufferSlice gpuBuffer,
-            Vector4f fogColor,
-            boolean flag,
+            Matrix4f matrix4f,
+            Matrix4f matrix4f2,
+            Matrix4f matrix4f3,
+            GpuBufferSlice gpuBufferSlice,
+            Vector4f vector4f,
+            boolean bl2,
             CallbackInfo ci) {
 
         float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(true);
-        RenderContext.captureMatrices(modelViewMatrix, projectionMatrix, tickDelta, camera);
+        RenderContext.captureMatrices(matrix4f, matrix4f2, tickDelta, camera);
     }
 }

@@ -28,8 +28,8 @@ dependencies {
 
     // Rely on the Noxesium Fabric mod implementation as another mod, here because it's in the
     // same repository it's using this custom syntax, but you can use modImplementation!
-    modImplementation("com.noxcrew.noxesium:fabric:3.0.0-beta.4-SNAPSHOT")
-    implementation("dev.isxander:debugify:1.21.8+1.0")
+    modImplementation("com.noxcrew.noxesium:fabric:3.0.0-rc.1")
+    implementation("dev.isxander:debugify:1.21.10+1.1")
     //compileOnly(files("libs/debugify-1.21.8+1.0.jar"))
 }
 

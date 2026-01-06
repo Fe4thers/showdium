@@ -1,7 +1,8 @@
 package com.noxcrew.noxesium.showdium.pingsystem;
 
+import com.noxcrew.noxesium.api.component.GameComponents;
 import com.noxcrew.noxesium.api.feature.NoxesiumFeature;
-import com.noxcrew.noxesium.api.registry.GameComponents;
+import com.noxcrew.noxesium.showdium.ShowdiumEntrypoint;
 import com.noxcrew.noxesium.showdium.config.PingSystemConfig;
 import com.noxcrew.noxesium.showdium.registry.ShowdiumGameComponent;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -17,7 +18,6 @@ import org.lwjgl.glfw.GLFW;
  */
 public class PingSystemFeature extends NoxesiumFeature {
 
-    private static final String KEYBIND_CATEGORY = "category.noxesium";
     private static final String KEYBIND_NAME = "key.showdium.ping";
     private static final int DEFAULT_KEY = GLFW.GLFW_KEY_V;
     private static final long HOLD_THRESHOLD_MS = 300L;
@@ -32,8 +32,8 @@ public class PingSystemFeature extends NoxesiumFeature {
     }
 
     private void initializeKeyBinding() {
-        pingKeyBinding =
-                KeyBindingHelper.registerKeyBinding(new KeyMapping(KEYBIND_NAME, DEFAULT_KEY, KEYBIND_CATEGORY));
+        pingKeyBinding = KeyBindingHelper.registerKeyBinding(
+                new KeyMapping(KEYBIND_NAME, DEFAULT_KEY, ShowdiumEntrypoint.Keybindcategory));
     }
 
     private void registerEventHandlers() {

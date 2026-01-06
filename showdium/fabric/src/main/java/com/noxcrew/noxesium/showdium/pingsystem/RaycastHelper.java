@@ -26,7 +26,7 @@ public final class RaycastHelper {
      */
     public static HitResult performRaycast(
             Vec3 direction, float tickDelta, double maxDistance, boolean includeTranslucent) {
-        var cameraEntity = ShowdiumEntrypoint.GAME.cameraEntity;
+        var cameraEntity = ShowdiumEntrypoint.GAME.getCameraEntity();
 
         if (cameraEntity == null || cameraEntity.level() == null) {
             return null;

@@ -13,5 +13,5 @@ plugins {
 dependencies {
     paperweight.paperDevBundle("${property("paper_version")}")
 
-    compileOnly("com.noxcrew.noxesium:paper-platform:3.0.0-beta.4-SNAPSHOT")
+    compileOnly("com.noxcrew.noxesium:paper-platform:3.0.0-rc.1")
 }

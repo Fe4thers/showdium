@@ -1,16 +1,16 @@
 package com.noxcrew.noxesium.showdium
 
 import com.noxcrew.noxesium.api.NoxesiumApi
-import com.noxcrew.noxesium.api.qib.QibCondition
-import com.noxcrew.noxesium.api.qib.QibDefinition
-import com.noxcrew.noxesium.api.qib.QibEffect
+import com.noxcrew.noxesium.api.feature.qib.QibCondition
+import com.noxcrew.noxesium.api.feature.qib.QibDefinition
+import com.noxcrew.noxesium.api.feature.qib.QibEffect
 import com.noxcrew.noxesium.api.registry.NoxesiumRegistries
 import com.noxcrew.noxesium.api.util.Unit
 import com.noxcrew.noxesium.core.registry.CommonEntityComponentTypes
 import com.noxcrew.noxesium.paper.NoxesiumPaper
+import com.noxcrew.noxesium.paper.component.noxesiumPlayer
+import com.noxcrew.noxesium.paper.component.setNoxesiumComponent
 import com.noxcrew.noxesium.paper.feature.ListeningNoxesiumFeature
-import com.noxcrew.noxesium.paper.feature.noxesiumPlayer
-import com.noxcrew.noxesium.paper.feature.setNoxesiumComponent
 import com.noxcrew.noxesium.showdium.network.clientbound.ClientboundKeybindAddPacket
 import com.noxcrew.noxesium.showdium.registry.ShowdiumGameComponent
 import net.kyori.adventure.key.Key
@@ -64,7 +64,7 @@ public class TestListener() : ListeningNoxesiumFeature() {
                 qibsbounce.add(sound)
                 qibsbounce.add(Wait)
                 val BouceLogic = QibEffect.Multiple(qibsbounce)
-                val qibDefinitionBounce = QibDefinition(null, null, null, BouceLogic, false)
+                val qibDefinitionBounce = QibDefinition(null, null, null, BouceLogic, null, false)
 
                 NoxesiumRegistries.QIB_EFFECTS.register(Key.key("bounce_pad"), qibDefinitionBounce)
 
@@ -83,7 +83,7 @@ public class TestListener() : ListeningNoxesiumFeature() {
                 qibJump.add(sound)
                 qibJump.add(conditional)
                 val JumpoLogic = QibEffect.Multiple(qibJump)
-                val qibDefinitionJump = QibDefinition(null, null, null, JumpoLogic, false)
+                val qibDefinitionJump = QibDefinition(null, null, null, JumpoLogic, null, false)
 
                 NoxesiumRegistries.QIB_EFFECTS.register(Key.key("jump_pad"), qibDefinitionJump)
 

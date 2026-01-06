@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -28,7 +30,7 @@ public class ShowdiumEntrypoint implements ClientNoxesiumEntrypoint {
 
     @Override
     public String getVersion() {
-        return "1.0.1";
+        return "1.0.2";
     }
 
     @Override
@@ -43,6 +45,8 @@ public class ShowdiumEntrypoint implements ClientNoxesiumEntrypoint {
     public static ShowdiumPacketHandling packetHandling;
     public static ElytraListener elytraListener;
     public static PingSystemFeature pingSystem;
+    public static KeyMapping.Category Keybindcategory =
+            KeyMapping.Category.register(Identifier.parse("category.noxesium"));
 
     @Override
     public void preInitialize() {

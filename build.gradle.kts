@@ -1,19 +1,10 @@
-import java.io.ByteArrayOutputStream
 import org.gradle.jvm.tasks.Jar
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessPlugin
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-fun getGitCommit(): String {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git", "rev-parse", "--short", "HEAD")
-        standardOutput = stdout
-    }
-    return stdout.toString().trim()
-}
 
 plugins {
 
@@ -24,13 +15,7 @@ plugins {
     alias(libs.plugins.paperweight) apply false
     alias(libs.plugins.shadow) apply false
     alias(libs.plugins.run.paper) apply false
-    java  // Add this line!
-    `maven-publish`
-    signing
-    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
-group = "com.github.Fe4thers"
-version = "v1.0.1"
 
 val javaVersion: Int = 21
 
@@ -77,6 +62,21 @@ subprojects {
         withType<AbstractArchiveTask> {
             archiveBaseName.set("noxesium-${project.name}")
         }
+
+        withType<KotlinCompile> {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.fromTarget(javaVersion.toString()))
+            }
+        }
+    }
+
+    // Explicit API only enables if set in after evaluate, for some reason?
+    afterEvaluate {
+        tasks {
+            withType<KotlinCompile> {
+                explicitApiMode.set(ExplicitApiMode.Strict)
+            }
+        }
     }
 
     extensions.configure<SpotlessExtension> {
@@ -104,35 +104,43 @@ subprojects {
         withSourcesJar()
         toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
     }
+}
 
-    // Set this late as the Kotlin plugin may not be applied yet!
-    afterEvaluate {
-        tasks {
-            withType<KotlinCompile> {
-                explicitApiMode.set(ExplicitApiMode.Strict)
+// Create a task to collect all jars
+val projectsToCollect= listOf("fabric", "paper-platform", "sync-fabric", "sync-paper")
+tasks.register<Copy>("collectAllJars") {
+    group = "publishing"
+    description = "Collects all JARs from subprojects into one directory"
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
-                compilerOptions {
-                    jvmTarget.set(JvmTarget.fromTarget(javaVersion.toString()))
-                }
-            }
-        }
+    // Delete files before we copy
+    val outputDir = layout.buildDirectory.dir("artifacts")
+    into(outputDir)
+    doFirst {
+        delete(outputDir)
     }
-}
 
+    // Ignore sources and dev jars as these are the assets we want in the GitHub releases and
+    // we don't want there to be that many
+    exclude("**/*-dev.jar")
+    exclude("**/*-sources.jar")
 
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
+    // Rename the paper jar to remove the -all
+    rename("-all\\.jar$", ".jar")
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "com.github.Fe4thers"
-            artifactId = "showdium"
-            version = project.version.toString()
+    // Drop the platform as it's unnecessary info
+    rename("paper-platform", "paper")
 
-            from(components["java"])
+    // Go through all subprojects and add their jars to the output
+    subprojects.forEach { subProject ->
+        if (subProject.name !in projectsToCollect) return@forEach
+        if (subProject.plugins.hasPlugin("com.gradleup.shadow")) {
+            // If it's a shadow jar project, only include that one!
+            dependsOn(subProject.tasks.withType<ShadowJar>())
+            from(subProject.tasks.withType<ShadowJar>().map { it.archiveFile })
+        } else {
+            dependsOn(subProject.tasks.withType<Jar>())
+            from(subProject.tasks.withType<Jar>().map { it.archiveFile })
         }
     }
 }

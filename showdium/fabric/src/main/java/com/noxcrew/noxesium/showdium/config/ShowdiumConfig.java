@@ -25,6 +25,7 @@ public class ShowdiumConfig {
     // Ping system settings
     public boolean pingEnabled = true;
     public float pingVolume = 1.0f;
+    public float pingScale = 1.0f;
 
     /**
      * Gets the config instance, loading from file if needed.
@@ -70,5 +71,6 @@ public class ShowdiumConfig {
     public void apply() {
         PingSystemConfig.setEnabled(pingEnabled);
         PingSystemConfig.setVolume(pingVolume);
+        PingSystemConfig.setVolume(pingScale);
     }
 }

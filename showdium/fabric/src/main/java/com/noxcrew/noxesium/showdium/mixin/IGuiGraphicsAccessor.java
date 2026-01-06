@@ -2,7 +2,7 @@ package com.noxcrew.noxesium.showdium.mixin;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
@@ -12,7 +12,7 @@ public interface IGuiGraphicsAccessor {
     @Invoker("innerBlit")
     void showdium_invokeInnerBlit(
             RenderPipeline renderPipeline,
-            ResourceLocation resourceLocation,
+            Identifier resourceLocation,
             int x1,
             int x2,
             int y1,

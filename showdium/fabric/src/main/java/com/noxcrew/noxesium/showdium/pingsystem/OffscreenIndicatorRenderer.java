@@ -11,7 +11,7 @@ public final class OffscreenIndicatorRenderer {
 
     private static final int EDGE_PADDING = 20;
     private static final int BOTTOM_PADDING = 60;
-    private static final float ARROW_SCALE = 0.25f;
+    private static final float BASE_ARROW_SCALE = 0.25f;
     private static final float ARROW_OFFSET = -5f;
 
     private static Vec2 screenDimensions;
@@ -82,8 +82,9 @@ public final class OffscreenIndicatorRenderer {
 
         matrices.pushMatrix();
         ProjectionHelper.applyRotationZ(matrices, angle);
-        matrices.scale(ARROW_SCALE, ARROW_SCALE);
+        matrices.scale(BASE_ARROW_SCALE, BASE_ARROW_SCALE);
         matrices.translate(ARROW_OFFSET, 0f);
+        // Note: renderDirectionalArrow now applies config scale internally
         renderer.renderDirectionalArrow(indicatorColor);
         matrices.popMatrix();
 

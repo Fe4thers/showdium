@@ -9,11 +9,16 @@
   "key.noxesium.customkeybind7": "Custom Keybind 8",
   "key.noxesium.customkeybind8": "Custom Keybind 9",
   "key.noxesium.customkeybind9": "Custom Keybind 10",
+  "key.showdium.ping": "Showdium Ping",
 
+  "subtitles.showdium.ping": "Showdium Ping",
+
+  "showdium.options.open_settings": "Showdium Settings",
   "showdium.options.title": "Showdium Options",
-  "showdium.options.open_settings": "Showdium Settings...",
   "showdium.options.ping_enabled.name": "Ping System",
   "showdium.options.ping_enabled.tooltip": "Enable or disable the ping system",
   "showdium.options.ping_volume.name": "Ping Volume",
-  "showdium.options.ping_volume.tooltip": "Volume of ping sounds from other players"
+  "showdium.options.ping_volume.tooltip": "Volume of ping sounds from other players",
+  "showdium.options.ping_scale.name": "Ping Size",
+  "showdium.options.ping_scale.tooltip": "Scale of ping markers and arrows on screen"
 }

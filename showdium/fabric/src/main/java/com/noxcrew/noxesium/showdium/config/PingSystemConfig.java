@@ -7,6 +7,7 @@ public final class PingSystemConfig {
 
     private static boolean enabled = true;
     private static float volume = 1.0f;
+    private static float pingScale = 1.0f;
 
     private PingSystemConfig() {}
 
@@ -40,6 +41,14 @@ public final class PingSystemConfig {
         ShowdiumConfig.getInstance().pingVolume = volume;
     }
 
+    public static float getPingScale() {
+        return pingScale;
+    }
+
+    public static void setPingScale(float value) {
+        pingScale = Math.max(0.25f, Math.min(2.0f, value));
+    }
+
     /**
      * Loads settings from the config file.
      */
@@ -47,5 +56,6 @@ public final class PingSystemConfig {
         ShowdiumConfig config = ShowdiumConfig.getInstance();
         enabled = config.pingEnabled;
         volume = config.pingVolume;
+        pingScale = config.pingScale;
     }
 }

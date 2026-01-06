@@ -113,6 +113,7 @@ public final class PingManager {
         activePings.put(pingId, ping);
         recordPingTime(creatorId);
 
+        // Play sound - ensure it runs on main thread
         playPingSoundIfAllowed(creatorId, position);
     }
 
@@ -189,6 +190,7 @@ public final class PingManager {
 
     /**
      * Plays the ping sound if the player hasn't played one recently.
+     * Ensures the sound is played on the main Minecraft thread.
      */
     private static void playPingSoundIfAllowed(UUID playerId, Vec3 position) {
         // Check volume - if 0 or disabled, don't play
@@ -206,9 +208,18 @@ public final class PingManager {
 
         lastSoundTime.put(playerId, now);
 
-        ShowdiumEntrypoint.GAME
-                .getSoundManager()
-                .play(new PingSoundInstance(PingResources.PING_SOUND, SoundSource.MASTER, volume, 1f, position));
+        // Ensure sound is played on the main thread
+        Minecraft mc = Minecraft.getInstance();
+        final float finalVolume = volume;
+        final Vec3 finalPosition = position;
+
+        mc.execute(() -> {
+            if (ShowdiumEntrypoint.GAME != null && ShowdiumEntrypoint.GAME.getSoundManager() != null) {
+                PingSoundInstance soundInstance = PingSoundInstance.createDirectional(
+                        PingResources.PING_SOUND, SoundSource.PLAYERS, finalVolume, 1.0f, finalPosition);
+                ShowdiumEntrypoint.GAME.getSoundManager().play(soundInstance);
+            }
+        });
     }
 
     // Input state accessors

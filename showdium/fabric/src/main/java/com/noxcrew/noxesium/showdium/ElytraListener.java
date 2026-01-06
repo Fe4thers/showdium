@@ -1,7 +1,7 @@
 package com.noxcrew.noxesium.showdium;
 
+import com.noxcrew.noxesium.api.component.GameComponents;
 import com.noxcrew.noxesium.api.feature.NoxesiumFeature;
-import com.noxcrew.noxesium.api.registry.GameComponents;
 import com.noxcrew.noxesium.showdium.registry.ShowdiumGameComponent;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;

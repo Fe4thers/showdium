@@ -1,6 +1,6 @@
 package com.noxcrew.noxesium.showdium.mixin;
 
-import com.noxcrew.noxesium.api.registry.GameComponents;
+import com.noxcrew.noxesium.api.component.GameComponents;
 import com.noxcrew.noxesium.showdium.registry.ShowdiumGameComponent;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Options;

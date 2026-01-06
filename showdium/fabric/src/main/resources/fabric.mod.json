@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "showdium",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "name": "Showdium",
   "description": "Showdium, an Noxesium entrypoint that adds extra features to noxesium",
   "authors": [
