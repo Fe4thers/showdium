@@ -58,14 +58,12 @@ public class PingSystemFeature extends NoxesiumFeature {
             return;
         }
 
-
         if (!GameComponents.getInstance().noxesium$hasComponent(ShowdiumGameComponent.PingSystem)) {
             if (!PingManager.getActivePings().isEmpty()) {
                 PingManager.clearAllPings();
             }
             return;
         }
-
 
         if (!PingSystemConfig.isEnabled()) {
             return;

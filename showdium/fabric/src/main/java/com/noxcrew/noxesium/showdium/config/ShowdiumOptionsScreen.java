@@ -84,9 +84,7 @@ public class ShowdiumOptionsScreen extends OptionsSubScreen {
     }
 
     @Override
-    protected void addOptions() {
-
-    }
+    protected void addOptions() {}
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {

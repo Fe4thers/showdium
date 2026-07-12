@@ -13,9 +13,7 @@ import org.joml.Vector4f;
  */
 public final class ProjectionHelper {
 
-    private ProjectionHelper() {
-
-    }
+    private ProjectionHelper() {}
 
     /**
      * Projects a 3D world position to 2D screen coordinates.
@@ -30,17 +28,14 @@ public final class ProjectionHelper {
 
         Vector4f clipSpacePos = new Vector4f((float) relativePos.x, (float) relativePos.y, (float) relativePos.z, 1.0f);
 
-
         clipSpacePos.mul(modelView);
         clipSpacePos.mul(projection);
 
         float depth = clipSpacePos.w;
 
-
         if (depth != 0) {
             clipSpacePos.div(depth);
         }
-
 
         float screenX = window.getGuiScaledWidth() * (0.5f + clipSpacePos.x * 0.5f);
         float screenY = window.getGuiScaledHeight() * (0.5f - clipSpacePos.y * 0.5f);
@@ -67,13 +62,11 @@ public final class ProjectionHelper {
         float dirX = (float) Math.cos(angle);
         float dirY = (float) Math.sin(angle);
 
-
         float normalizedX = dirX / width;
         float normalizedY = dirY / height;
 
         float centerX = width * 0.5f;
         float centerY = height * 0.5f;
-
 
         if (Math.abs(normalizedX) < Math.abs(normalizedY)) {
 

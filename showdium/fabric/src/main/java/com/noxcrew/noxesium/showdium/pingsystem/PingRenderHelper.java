@@ -1,6 +1,5 @@
 package com.noxcrew.noxesium.showdium.pingsystem;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
 import com.noxcrew.noxesium.showdium.ShowdiumEntrypoint;
 import com.noxcrew.noxesium.showdium.config.PingSystemConfig;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -65,23 +64,22 @@ public class PingRenderHelper {
         if (player == null) {
             return;
         }
-
         Identifier skinTexture = player.getSkin().body().texturePath();
-
-        GlStateManager._enableBlend(0);
 
         // Base head layer (8x8 from texture)
         graphics.blit(RenderPipelines.GUI_TEXTURED, skinTexture, -4, -4, 8, 8, 8, 8, 64, 64);
-
         // Hat overlay layer
         graphics.blit(RenderPipelines.GUI_TEXTURED, skinTexture, -4, -4, 40, 8, 8, 8, 64, 64);
-
-        GlStateManager._disableBlend(0);
     }
-
     /**
      * Renders a texture at the current position.
      */
+    public void renderTexture(Identifier texture, int size, int color) {
+        int offset = -size / 2;
+        graphics.blit(RenderPipelines.GUI_TEXTURED, texture, offset, offset, 0, 0, size, size, size, size, color);
+    }
+
+    /*
     public void renderTexture(Identifier texture, int size, int color) {
         int offset = -size / 2;
 
@@ -89,6 +87,8 @@ public class PingRenderHelper {
         graphics.blit(RenderPipelines.GUI_TEXTURED, texture, offset, offset, 0, 0, size, size, size, size, color);
         GlStateManager._disableBlend(0);
     }
+
+     */
 
     /**
      * Renders the directional arrow icon with config scale applied.

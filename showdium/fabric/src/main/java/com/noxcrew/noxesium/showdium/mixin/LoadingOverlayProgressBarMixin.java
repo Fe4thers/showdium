@@ -29,21 +29,15 @@ public abstract class LoadingOverlayProgressBarMixin {
         int totalWidth = right - left;
         int totalHeight = bottom - top;
 
-
         int filledWidth = Mth.ceil((float) totalWidth * this.currentProgress);
-
 
         int alphaInt = Math.round(alpha * 255.0f);
 
-
         int backgroundColor = ARGB.color(alphaInt, 40, 40, 40);
-
 
         int progressColor = ARGB.color(alphaInt, 255, 215, 0);
 
-
         guiGraphics.fill(left, top, right, bottom, backgroundColor);
-
 
         if (filledWidth > 0) {
             guiGraphics.fill(left, top, left + filledWidth, bottom, progressColor);
