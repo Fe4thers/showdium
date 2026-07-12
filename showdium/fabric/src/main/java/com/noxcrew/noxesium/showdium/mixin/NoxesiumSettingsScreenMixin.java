@@ -23,7 +23,7 @@ public abstract class NoxesiumSettingsScreenMixin {
 
         rowHelper.addChild(Button.builder(
                         Component.translatable("showdium.options.open_settings"),
-                        button -> Minecraft.getInstance().setScreen(new ShowdiumOptionsScreen(self)))
+                        button -> Minecraft.getInstance().setScreenAndShow(new ShowdiumOptionsScreen(self)))
                 .bounds(0, 0, 150, 20)
                 .build());
     }

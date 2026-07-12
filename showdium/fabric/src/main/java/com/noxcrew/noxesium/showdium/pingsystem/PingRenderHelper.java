@@ -3,7 +3,7 @@ package com.noxcrew.noxesium.showdium.pingsystem;
 import com.mojang.blaze3d.opengl.GlStateManager;
 import com.noxcrew.noxesium.showdium.ShowdiumEntrypoint;
 import com.noxcrew.noxesium.showdium.config.PingSystemConfig;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -22,10 +22,10 @@ public class PingRenderHelper {
     private static final float PING_ICON_SCALE = 3.5f;
     private static final float HEAD_ICON_SCALE = 2.0f;
 
-    private final GuiGraphics graphics;
+    private final GuiGraphicsExtractor graphics;
     private final Matrix3x2fStack matrixStack;
 
-    public PingRenderHelper(GuiGraphics graphics) {
+    public PingRenderHelper(GuiGraphicsExtractor graphics) {
         this.graphics = graphics;
         this.matrixStack = graphics.pose();
     }
@@ -53,7 +53,7 @@ public class PingRenderHelper {
         graphics.fill(-2, -2, (int) textWidth + 1, (int) textHeight, LABEL_BACKGROUND_COLOR);
 
         // Text
-        graphics.drawString(font, text, 0, 0, textColor, false);
+        graphics.text(font, text, 0, 0, textColor, false);
 
         matrixStack.popMatrix();
     }
@@ -68,7 +68,7 @@ public class PingRenderHelper {
 
         Identifier skinTexture = player.getSkin().body().texturePath();
 
-        GlStateManager._enableBlend();
+        GlStateManager._enableBlend(0);
 
         // Base head layer (8x8 from texture)
         graphics.blit(RenderPipelines.GUI_TEXTURED, skinTexture, -4, -4, 8, 8, 8, 8, 64, 64);
@@ -76,7 +76,7 @@ public class PingRenderHelper {
         // Hat overlay layer
         graphics.blit(RenderPipelines.GUI_TEXTURED, skinTexture, -4, -4, 40, 8, 8, 8, 64, 64);
 
-        GlStateManager._disableBlend();
+        GlStateManager._disableBlend(0);
     }
 
     /**
@@ -85,9 +85,9 @@ public class PingRenderHelper {
     public void renderTexture(Identifier texture, int size, int color) {
         int offset = -size / 2;
 
-        GlStateManager._enableBlend();
+        GlStateManager._enableBlend(0);
         graphics.blit(RenderPipelines.GUI_TEXTURED, texture, offset, offset, 0, 0, size, size, size, size, color);
-        GlStateManager._disableBlend();
+        GlStateManager._disableBlend(0);
     }
 
     /**

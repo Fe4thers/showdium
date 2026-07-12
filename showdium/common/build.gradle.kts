@@ -1,19 +1,25 @@
 plugins {
-    id("net.neoforged.moddev")
+    id("net.fabricmc.fabric-loom")
 }
-
+/*
 neoForge {
     setNeoFormVersion("${property("neoform_version")}")
 }
+    
+ */
 
 dependencies {
+    minecraft(libs.minecraft)
+    //mappings(loom.officialMojangMappings())
+    //modImplementation(libs.fabric.loader)
+
     // Replace this with a dependency on the Noxesium repository
-    api("com.noxcrew.noxesium:api:3.0.0")
+    api("com.noxcrew.noxesium:api:3.2.3")
 
     // This example shows how you can use a set-up that relies on NMS dependencies,
     // you can also make your own that does not use NMS dependencies by looking at how
     // this repository is set up. NMS-based implementations are likely most common though!
-    api("com.noxcrew.noxesium:nms:3.0.0")
+    api("com.noxcrew.noxesium:nms:3.2.3")
 }
 
 // Define the sources of this repository as a new configuration which can be replied upon

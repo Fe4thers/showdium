@@ -2,7 +2,7 @@ package com.noxcrew.noxesium.showdium.mixin;
 
 import com.noxcrew.noxesium.api.component.GameComponents;
 import com.noxcrew.noxesium.showdium.registry.ShowdiumGameComponent;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
@@ -18,33 +18,33 @@ public abstract class LoadingOverlayProgressBarMixin {
     @Shadow
     private float currentProgress;
 
-    @Inject(method = "drawProgressBar", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "extractProgressBar", at = @At("HEAD"), cancellable = true)
     private void onDrawProgressBar(
-            GuiGraphics guiGraphics, int left, int top, int right, int bottom, float alpha, CallbackInfo ci) {
+            GuiGraphicsExtractor guiGraphics, int left, int top, int right, int bottom, float alpha, CallbackInfo ci) {
         if (!GameComponents.getInstance().noxesium$hasComponent(ShowdiumGameComponent.ShowdiumLoadingScreen)) {
-            return; // let original run
+            return;
         }
-        ci.cancel(); // Cancel original
+        ci.cancel();
 
         int totalWidth = right - left;
         int totalHeight = bottom - top;
 
-        // Calculate filled width based on actual progress (not alpha!)
+
         int filledWidth = Mth.ceil((float) totalWidth * this.currentProgress);
 
-        // Alpha is for opacity/transparency
+
         int alphaInt = Math.round(alpha * 255.0f);
 
-        // Background color (dark gray with alpha)
+
         int backgroundColor = ARGB.color(alphaInt, 40, 40, 40);
 
-        // Progress color (yellow/gold with alpha)
+
         int progressColor = ARGB.color(alphaInt, 255, 215, 0);
 
-        // Draw background bar
+
         guiGraphics.fill(left, top, right, bottom, backgroundColor);
 
-        // Draw filled progress bar
+
         if (filledWidth > 0) {
             guiGraphics.fill(left, top, left + filledWidth, bottom, progressColor);
         }

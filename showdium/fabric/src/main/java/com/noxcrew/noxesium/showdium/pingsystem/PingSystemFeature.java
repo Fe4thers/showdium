@@ -6,10 +6,12 @@ import com.noxcrew.noxesium.showdium.ShowdiumEntrypoint;
 import com.noxcrew.noxesium.showdium.config.PingSystemConfig;
 import com.noxcrew.noxesium.showdium.registry.ShowdiumGameComponent;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -32,13 +34,16 @@ public class PingSystemFeature extends NoxesiumFeature {
     }
 
     private void initializeKeyBinding() {
-        pingKeyBinding = KeyBindingHelper.registerKeyBinding(
+        pingKeyBinding = KeyMappingHelper.registerKeyMapping(
                 new KeyMapping(KEYBIND_NAME, DEFAULT_KEY, ShowdiumEntrypoint.Keybindcategory));
     }
 
     private void registerEventHandlers() {
         ClientTickEvents.END_CLIENT_TICK.register(PingSystemFeature::onTick);
-        HudRenderCallback.EVENT.register(PingOverlayRenderer::render);
+        HudElementRegistry.attachElementAfter(
+                VanillaHudElements.TITLE_AND_SUBTITLE,
+                Identifier.fromNamespaceAndPath("showdium", "ping_overlay"),
+                PingOverlayRenderer::render);
     }
 
     private void loadConfig() {
@@ -53,7 +58,7 @@ public class PingSystemFeature extends NoxesiumFeature {
             return;
         }
 
-        // Check if ping system is enabled by server
+
         if (!GameComponents.getInstance().noxesium$hasComponent(ShowdiumGameComponent.PingSystem)) {
             if (!PingManager.getActivePings().isEmpty()) {
                 PingManager.clearAllPings();
@@ -61,7 +66,7 @@ public class PingSystemFeature extends NoxesiumFeature {
             return;
         }
 
-        // Check if ping system is enabled by client
+
         if (!PingSystemConfig.isEnabled()) {
             return;
         }
@@ -77,18 +82,15 @@ public class PingSystemFeature extends NoxesiumFeature {
         boolean wasKeyDown = PingManager.getPreviousKeyState();
         long currentTime = System.currentTimeMillis();
 
-        // Key just pressed
         if (isKeyDown && !wasKeyDown) {
             PingManager.setKeyPressStartTime(currentTime);
         }
 
-        // Key held for threshold - remove pings
         if (isKeyDown && currentTime - PingManager.getKeyPressStartTime() >= HOLD_THRESHOLD_MS) {
             PingManager.removeLocalPlayerPings(mc.player.getUUID());
             PingManager.setKeyPressStartTime(Long.MAX_VALUE);
         }
 
-        // Key just released - create ping if not held
         if (!isKeyDown && wasKeyDown) {
             if (PingManager.getKeyPressStartTime() != Long.MAX_VALUE) {
                 int pingColor = GameComponents.getInstance()

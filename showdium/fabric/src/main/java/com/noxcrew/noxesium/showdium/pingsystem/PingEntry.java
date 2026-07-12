@@ -112,7 +112,7 @@ public class PingEntry extends PingData {
             return DEFAULT_COLOR;
         }
 
-        Integer teamColor = creatorInfo.getTeam().getColor().getColor();
+        Integer teamColor = creatorInfo.getTeam().getColor().get().rgb();
         if (teamColor == null) {
             return DEFAULT_COLOR;
         }

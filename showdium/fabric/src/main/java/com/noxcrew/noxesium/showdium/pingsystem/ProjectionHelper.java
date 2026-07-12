@@ -14,7 +14,7 @@ import org.joml.Vector4f;
 public final class ProjectionHelper {
 
     private ProjectionHelper() {
-        // Prevent instantiation
+
     }
 
     /**
@@ -22,7 +22,7 @@ public final class ProjectionHelper {
      */
     public static ScreenPosition projectToScreen(Vec3 worldPosition, Matrix4f modelView, Matrix4f projection) {
         var window = ShowdiumEntrypoint.GAME.getWindow();
-        var camera = ShowdiumEntrypoint.GAME.gameRenderer.getMainCamera();
+        var camera = ShowdiumEntrypoint.GAME.gameRenderer.mainCamera();
 
         // Transform world position relative to camera
         Vec3 cameraPos = camera.position();
@@ -30,18 +30,18 @@ public final class ProjectionHelper {
 
         Vector4f clipSpacePos = new Vector4f((float) relativePos.x, (float) relativePos.y, (float) relativePos.z, 1.0f);
 
-        // Apply transformations
+
         clipSpacePos.mul(modelView);
         clipSpacePos.mul(projection);
 
         float depth = clipSpacePos.w;
 
-        // Perspective division
+
         if (depth != 0) {
             clipSpacePos.div(depth);
         }
 
-        // Convert to screen coordinates
+
         float screenX = window.getGuiScaledWidth() * (0.5f + clipSpacePos.x * 0.5f);
         float screenY = window.getGuiScaledHeight() * (0.5f - clipSpacePos.y * 0.5f);
 
@@ -67,36 +67,31 @@ public final class ProjectionHelper {
         float dirX = (float) Math.cos(angle);
         float dirY = (float) Math.sin(angle);
 
-        // Normalize direction by rectangle dimensions
+
         float normalizedX = dirX / width;
         float normalizedY = dirY / height;
 
         float centerX = width * 0.5f;
         float centerY = height * 0.5f;
 
-        // Determine which edge the line intersects
+
         if (Math.abs(normalizedX) < Math.abs(normalizedY)) {
-            // Intersects top or bottom edge
+
             if (normalizedY < 0) {
-                // Top edge
                 float t = -centerY / dirY;
                 float x = centerX + t * dirX;
                 return new Vec2(x + topLeft.x, topLeft.y);
             } else {
-                // Bottom edge
                 float t = centerY / dirY;
                 float x = centerX + t * dirX;
                 return new Vec2(x + topLeft.x, bottomRight.y);
             }
         } else {
-            // Intersects left or right edge
             if (normalizedX < 0) {
-                // Left edge
                 float t = -centerX / dirX;
                 float y = centerY + t * dirY;
                 return new Vec2(topLeft.x, y + topLeft.y);
             } else {
-                // Right edge
                 float t = centerX / dirX;
                 float y = centerY + t * dirY;
                 return new Vec2(bottomRight.x, y + topLeft.y);

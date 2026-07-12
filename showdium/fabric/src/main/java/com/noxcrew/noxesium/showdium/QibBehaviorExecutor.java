@@ -4,6 +4,7 @@ import static com.noxcrew.noxesium.api.feature.qib.QibCondition.IS_ON_GROUND;
 
 import com.noxcrew.noxesium.api.feature.NoxesiumFeature;
 import com.noxcrew.noxesium.api.feature.qib.QibEffect;
+import com.noxcrew.noxesium.core.fabric.feature.entity.LivingEntityExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,7 +40,6 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
      * Ticks down scheduled effects and runs them.
      */
     private void tickEffects() {
-        // Increment all timers
         Player player = Minecraft.getInstance().player;
         if (player != null) {
             if (!player.onGround() && WasPlayerOnGround) {
@@ -51,7 +51,6 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
             }
         }
 
-        pending.forEach(pair -> pair.getKey().decrementAndGet());
         var iterator = pending.iterator();
         while (iterator.hasNext()) {
             var pair = iterator.next();
@@ -64,6 +63,7 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
     }
 
     protected void executeBehavior(Player player, QibEffect effect) {
+        LivingEntityExtension playerExt = (LivingEntityExtension) player;
         switch (effect) {
             case QibEffect.Multiple multiple -> {
                 for (var nested : multiple.effects()) {
@@ -83,6 +83,7 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
                             case IS_IN_WATER -> player.isInWater();
                             case IS_IN_WATER_OR_RAIN -> player.isInWaterOrRain();
                             case IS_IN_VEHICLE -> player.isPassenger();
+                            case IS_FLYING -> player.isFallFlying();
                         };
                 if (conditional.condition() == IS_ON_GROUND && !conditional.value()) {
                     // logic to skip the jump of the ground
@@ -148,7 +149,8 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
                 var type = BuiltInRegistries.MOB_EFFECT
                         .get(Identifier.fromNamespaceAndPath(giveEffect.namespace(), giveEffect.path()))
                         .orElse(null);
-                player.noxesium$addClientsidePotionEffect(new MobEffectInstance(
+
+                playerExt.noxesium$addClientsidePotionEffect(new MobEffectInstance(
                         type,
                         giveEffect.duration(),
                         giveEffect.amplifier(),
@@ -157,12 +159,12 @@ public class QibBehaviorExecutor extends NoxesiumFeature {
                         giveEffect.showIcon()));
             }
             case QibEffect.RemovePotionEffect removeEffect -> {
-                player.noxesium$removeClientsidePotionEffect(BuiltInRegistries.MOB_EFFECT
+                playerExt.noxesium$removeClientsidePotionEffect(BuiltInRegistries.MOB_EFFECT
                         .get(Identifier.fromNamespaceAndPath(removeEffect.namespace(), removeEffect.path()))
                         .orElse(null));
             }
             case QibEffect.RemoveAllPotionEffects ignored -> {
-                player.noxesium$clearClientsidePotionEffects();
+                playerExt.noxesium$clearClientsidePotionEffects();
             }
             case QibEffect.AddVelocity addVelocity -> {
                 player.push(addVelocity.x(), addVelocity.y(), addVelocity.z());

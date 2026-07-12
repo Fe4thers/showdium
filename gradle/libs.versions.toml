@@ -1,15 +1,14 @@
 [versions]
 # Plugins
-shadow = "9.2.2"
+shadow = "9.4.2"
 spotless = "8.1.0"
-loom = "1.14-SNAPSHOT"
-moddev = "2.0.134"
-paperweight = "2.0.0-beta.19"
+loom = "1.17-SNAPSHOT"
+paperweight = "2.0.0-beta.21"
 run-paper = "3.0.2"
 
 # Tooling
-kotlin-coroutines = "1.10.2"
-kotlin-serialization = "1.9.0"
+kotlin-coroutines = "1.11.0"
+kotlin-serialization = "1.11.0"
 guava = "33.3.1-jre"
 slf4j = "2.0.16"
 
@@ -18,30 +17,28 @@ annotations = "24.1.0"
 gson = "2.10"
 prtree = "1.5.0"
 caffeine = "3.1.8"
-adventure = "4.25.0"
-adventure-fabric = "6.8.0"
+adventure = "4.26.1"
+adventure-fabric = "7.0.0-SNAPSHOT"
 apache-commons = "3.17.0"
 joml = "1.10.8"
-juniversalchardet = "2.5.0"
 
 # Fabric - https://modmuss50.me/fabric.html
-minecraft = "1.21.11"
-fabric-loader = "0.18.1"
-fabric-api = "0.140.0+1.21.11"
+minecraft = "26.2"
+fabric-loader = "0.19.3"
+fabric-api = "0.152.1+26.2"
 
 # Mods
-sodium = "mc1.21.11-0.8.2-fabric"
-modmenu = "17.0.0-beta.1"
+sodium = "mc26.2-0.9.0-fabric"
+modmenu = "20.0.0-beta.2"
 devlogin = "0.1.0.5"
 
 # Paper
-viaversion = "5.4.2"
+viaversion = "5.9.1"
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-loom = { id = "fabric-loom", version.ref = "loom" }
-moddev = { id = "net.neoforged.moddev", version.ref = "moddev" }
+loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
 paperweight = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
 
@@ -60,7 +57,6 @@ adventure-api = { group = "net.kyori", name = "adventure-api", version.ref = "ad
 adventure-fabric = { group = "net.kyori", name = "adventure-platform-fabric", version.ref = "adventure-fabric" }
 apache-commons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apache-commons" }
 joml = { group = "org.joml", name = "joml", version.ref = "joml" }
-juniversalchardet = { group = "com.github.albfernandez", name = "juniversalchardet", version.ref = "juniversalchardet" }
 
 minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
 fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }

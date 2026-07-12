@@ -58,8 +58,7 @@ public class ShowdiumPacketSerializers {
                         ClientboundPingAddPacket::uuid,
                         ByteBufCodecs.VECTOR3F.map(
                                 vector3fc -> new Vector3f(vector3fc.x(), vector3fc.y(), vector3fc.z()),
-                                vector3f -> vector3f
-                        ),
+                                vector3f -> vector3f),
                         ClientboundPingAddPacket::location,
                         ClientboundPingAddPacket::new));
 
@@ -79,8 +78,7 @@ public class ShowdiumPacketSerializers {
                         ServerboundPingAddPacket::uuid,
                         ByteBufCodecs.VECTOR3F.map(
                                 vector3fc -> new Vector3f(vector3fc.x(), vector3fc.y(), vector3fc.z()),
-                                vector3f -> vector3f
-                        ),
+                                vector3f -> vector3f),
                         ServerboundPingAddPacket::location,
                         ServerboundPingAddPacket::new));
 

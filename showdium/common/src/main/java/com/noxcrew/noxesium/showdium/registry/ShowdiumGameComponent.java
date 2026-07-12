@@ -73,14 +73,12 @@ public class ShowdiumGameComponent {
     /**
      * adds the ping system
      */
-    public static NoxesiumComponentType<Unit> PingSystem =
-            register("ping_system", NoxesiumCodecs.UNIT, Unit.class);
+    public static NoxesiumComponentType<Unit> PingSystem = register("ping_system", NoxesiumCodecs.UNIT, Unit.class);
 
     /**
      * adds the team color for the ping system
      */
-    public static NoxesiumComponentType<Integer> TeamColor =
-            register("team_color", Codec.INT, Integer.class);
+    public static NoxesiumComponentType<Integer> TeamColor = register("team_color", Codec.INT, Integer.class);
 
     /**
      * Registers a new component type to the registry.

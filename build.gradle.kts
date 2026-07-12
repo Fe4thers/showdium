@@ -7,9 +7,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-
-    kotlin("jvm") version "2.2.0" apply false
-    alias(libs.plugins.moddev) apply false
+    kotlin("jvm") version "2.3.21" apply false
     alias(libs.plugins.loom) apply false
     alias(libs.plugins.spotless) apply false
     alias(libs.plugins.paperweight) apply false
@@ -17,7 +15,7 @@ plugins {
     alias(libs.plugins.run.paper) apply false
 }
 
-val javaVersion: Int = 21
+val javaVersion: Int = 25
 
 allprojects {
 
@@ -81,7 +79,7 @@ subprojects {
 
     extensions.configure<SpotlessExtension> {
         java {
-            palantirJavaFormat("2.50.0")
+            palantirJavaFormat("2.91.0")
         }
         kotlin {
             ktlint("1.5.0")

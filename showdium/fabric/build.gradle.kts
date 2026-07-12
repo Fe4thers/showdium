@@ -2,16 +2,15 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.internal.notations.DependencyNotationParser.create
 
 plugins {
-    id("fabric-loom")
+    id("net.fabricmc.fabric-loom")
     id("noxesium.showdium")
 }
 loom {
-
     runs {
         create("clientAuth") {
             client()
             ideConfigGenerated(true)
-            programArgs.addAll(listOf("--launch_target", "net.fabricmc.loader.impl.launch.knot.KnotClient"))
+            //programArgs.addAll(listOf("--launch_target", "net.fabricmc.loader.impl.launch.knot.KnotClient"))
             mainClass.set("net.covers1624.devlogin.DevLogin")
         }
     }
@@ -19,30 +18,26 @@ loom {
 
 dependencies {
     minecraft(libs.minecraft)
-    mappings(loom.officialMojangMappings())
-    modImplementation(libs.fabric.loader)
-    modImplementation(libs.fabric.api)
+    //mappings(loom.officialMojangMappings())
+    implementation(libs.fabric.loader)
+    implementation(libs.fabric.api)
 
     // Add DevLogin
     localRuntime(libs.devlogin)
 
-    // Rely on the Noxesium Fabric mod implementation as another mod, here because it's in the
-    // same repository it's using this custom syntax, but you can use modImplementation!
-    modImplementation("com.noxcrew.noxesium:fabric:3.0.0")
-    implementation("dev.isxander:debugify:1.21.10+1.1")
+    implementation("com.noxcrew.noxesium:fabric:3.2.3")
+    //implementation("dev.isxander:debugify:26.1.2.2")
+    compileOnly(files("libs/debugify-26.2.0.0.jar"))
     //compileOnly(files("libs/debugify-1.21.8+1.0.jar"))
 }
 
 tasks.withType<ShadowJar> {
-    archiveClassifier.set("") // make the output replace normal jar
+    archiveClassifier.set("")
 
-    // Include runtime dependencies (modImplementation, localRuntime)
     configurations = listOf(project.configurations.runtimeClasspath.get())
 
-    // Optionally relocate packages to avoid conflicts
-    // relocate("com.noxcrew", "your.shadowed.noxcrew")
 
-    mergeServiceFiles() // merge any service files inside dependencies
+    mergeServiceFiles()
 
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE // or INCLUDE/MERGE based on your needs
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

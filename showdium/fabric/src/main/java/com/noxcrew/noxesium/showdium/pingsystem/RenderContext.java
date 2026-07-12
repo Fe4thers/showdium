@@ -1,37 +1,25 @@
 package com.noxcrew.noxesium.showdium.pingsystem;
 
-import net.minecraft.client.Camera;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import org.joml.Matrix4f;
 
-/**
- * Stores render context information captured during world rendering.
- * This data is needed for projecting 3D positions to screen space during HUD rendering.
- */
 public final class RenderContext {
 
     private static Matrix4f storedModelView;
     private static Matrix4f storedProjection;
-    private static Camera storedCamera;
+    private static CameraRenderState storedCamera;
     private static float storedTickDelta;
 
-    private RenderContext() {
-        // Prevent instantiation
-    }
+    private RenderContext() {}
 
-    /**
-     * Captures the current render matrices from the world renderer.
-     * Called by the LevelRenderer mixin.
-     */
-    public static void captureMatrices(Matrix4f modelView, Matrix4f projection, float tickDelta, Camera camera) {
+    public static void captureMatrices(
+            Matrix4f modelView, Matrix4f projection, float tickDelta, CameraRenderState camera) {
         storedModelView = new Matrix4f(modelView);
-        storedProjection = new Matrix4f(projection);
+        storedProjection = projection != null ? new Matrix4f(projection) : null;
         storedCamera = camera;
         storedTickDelta = tickDelta;
     }
 
-    /**
-     * Clears the stored render context.
-     */
     public static void clear() {
         storedModelView = null;
         storedProjection = null;
@@ -47,7 +35,7 @@ public final class RenderContext {
         return storedProjection;
     }
 
-    public static Camera getCamera() {
+    public static CameraRenderState getCamera() {
         return storedCamera;
     }
 
@@ -55,10 +43,7 @@ public final class RenderContext {
         return storedTickDelta;
     }
 
-    /**
-     * Checks if the render context has valid data.
-     */
     public static boolean hasValidData() {
-        return storedModelView != null && storedProjection != null && storedCamera != null;
+        return storedModelView != null && storedCamera != null;
     }
 }

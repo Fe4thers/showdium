@@ -8,7 +8,7 @@ import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
@@ -102,6 +102,6 @@ public class PistonPushMixin {
     private static boolean customEntityCondition(Entity entity) {
         String noxesiumComponent = GameComponents.getInstance()
                 .noxesium$getComponentOr(ShowdiumGameComponent.SlimeBlockBlocks, () -> "empty");
-        return entity.getType() == EntityType.PLAYER || !noxesiumComponent.equals("empty");
+        return entity.getType() == EntityTypes.PLAYER || !noxesiumComponent.equals("empty");
     }
 }

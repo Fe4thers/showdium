@@ -64,7 +64,7 @@ public class TestListener() : ListeningNoxesiumFeature() {
                 qibsbounce.add(sound)
                 qibsbounce.add(Wait)
                 val BouceLogic = QibEffect.Multiple(qibsbounce)
-                val qibDefinitionBounce = QibDefinition(null, null, null, BouceLogic, null, false)
+                val qibDefinitionBounce = QibDefinition(null, null, null, BouceLogic, null, null, false)
 
                 NoxesiumRegistries.QIB_EFFECTS.register(Key.key("bounce_pad"), qibDefinitionBounce)
 
@@ -83,7 +83,7 @@ public class TestListener() : ListeningNoxesiumFeature() {
                 qibJump.add(sound)
                 qibJump.add(conditional)
                 val JumpoLogic = QibEffect.Multiple(qibJump)
-                val qibDefinitionJump = QibDefinition(null, null, null, JumpoLogic, null, false)
+                val qibDefinitionJump = QibDefinition(null, null, null, JumpoLogic, null, null,false)
 
                 NoxesiumRegistries.QIB_EFFECTS.register(Key.key("jump_pad"), qibDefinitionJump)
 

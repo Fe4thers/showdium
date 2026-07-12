@@ -5,7 +5,7 @@ import com.noxcrew.noxesium.showdium.registry.ShowdiumGameComponent;
 import java.util.Optional;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ReloadInstance;
@@ -52,9 +52,9 @@ public abstract class LoadingOverlayMixin {
     @Shadow
     private long fadeInStart;
 
-    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
     private void renderCustomScreen(
-            GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+            GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (!GameComponents.getInstance().noxesium$hasComponent(ShowdiumGameComponent.ShowdiumLoadingScreen)) {
             return;
         }
@@ -104,10 +104,10 @@ public abstract class LoadingOverlayMixin {
             double d = Math.min((double) screenWidth * 0.75, (double) screenHeight) * 0.25;
             int r = (int) (d * 2.0);
             int progressBarY = (int) ((double) screenHeight * 0.8325);
-            this.drawProgressBar(
+            this.extractProgressBar(
                     guiGraphics, screenWidth / 2 - r, progressBarY - 5, screenWidth / 2 + r, progressBarY + 5, alpha);
         }
-        if (fadeOutSeconds >= 2.0f) this.minecraft.setOverlay(null);
+        if (fadeOutSeconds >= 2.0f) this.minecraft.gui.setOverlay(null);
         if (this.fadeOutStart == -1L && this.reload.isDone() && (!this.fadeIn || fadeInSeconds >= 2.0f)) {
             try {
                 this.reload.checkExceptions();
@@ -116,12 +116,12 @@ public abstract class LoadingOverlayMixin {
                 this.onFinish.accept(Optional.of(throwable));
             }
             this.fadeOutStart = Util.getMillis();
-            if (this.minecraft.screen != null) this.minecraft.screen.init(screenWidth, screenHeight);
+            if (this.minecraft.gui.screen() != null) this.minecraft.gui.screen().init(screenWidth, screenHeight);
         }
     }
 
     @Shadow
-    private void drawProgressBar(GuiGraphics guiGraphics, int i, int j, int k, int l, float f) {
+    private void extractProgressBar(GuiGraphicsExtractor guiGraphics, int i, int j, int k, int l, float f) {
         throw new AssertionError();
     }
 }

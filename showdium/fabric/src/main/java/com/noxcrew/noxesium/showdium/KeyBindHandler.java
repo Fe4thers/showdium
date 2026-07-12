@@ -8,7 +8,7 @@ import com.noxcrew.noxesium.api.registry.NoxesiumRegistries;
 import com.noxcrew.noxesium.showdium.network.serverbound.ServerboundKeybindTriggeredPacket;
 import java.util.*;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.kyori.adventure.key.Key;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -50,7 +50,7 @@ public final class KeyBindHandler extends NoxesiumFeature {
             final String keyName = "key.noxesium.customkeybind" + i;
             final KeyMapping key =
                     new KeyMapping(keyName, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, getKeybindCategory());
-            KeyBindingHelper.registerKeyBinding(key);
+            KeyMappingHelper.registerKeyMapping(key);
         }
         ClientTickEvents.END_CLIENT_TICK.register(this::onClientTick);
     }
