@@ -30,7 +30,7 @@ public class ShowdiumEntrypoint implements ClientNoxesiumEntrypoint {
 
     @Override
     public String getVersion() {
-        return "1.0.3";
+        return "1.0.4";
     }
 
     @Override
